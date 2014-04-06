@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BFF98AB818E52302002022D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF98AB718E52302002022D8 /* Foundation.framework */; };
+		BFF98ABA18E52302002022D8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF98AB918E52302002022D8 /* CoreGraphics.framework */; };
+		BFF98ABC18E52302002022D8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF98ABB18E52302002022D8 /* UIKit.framework */; };
+		BFF98AC218E52302002022D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFF98AC018E52302002022D8 /* InfoPlist.strings */; };
+		BFF98AC418E52302002022D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AC318E52302002022D8 /* main.m */; };
+		BFF98AC818E52302002022D8 /* CardGameAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AC718E52302002022D8 /* CardGameAppDelegate.m */; };
+		BFF98ACB18E52302002022D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFF98AC918E52302002022D8 /* Main.storyboard */; };
+		BFF98ACE18E52302002022D8 /* CardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98ACD18E52302002022D8 /* CardGameViewController.m */; };
+		BFF98AD018E52302002022D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF98ACF18E52302002022D8 /* Images.xcassets */; };
+		BFF98AD718E52302002022D8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF98AD618E52302002022D8 /* XCTest.framework */; };
+		BFF98AD818E52302002022D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF98AB718E52302002022D8 /* Foundation.framework */; };
+		BFF98AD918E52302002022D8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF98ABB18E52302002022D8 /* UIKit.framework */; };
+		BFF98AE118E52302002022D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFF98ADF18E52302002022D8 /* InfoPlist.strings */; };
+		BFF98AE318E52302002022D8 /* Pug_CardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AE218E52302002022D8 /* Pug_CardTests.m */; };
+		BFF98AF018E54773002022D8 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AEF18E54773002022D8 /* Card.m */; };
+		BFF98AF518E54F75002022D8 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AF418E54F75002022D8 /* PlayingCard.m */; };
+		BFF98AF818E7933C002022D8 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AF718E7933C002022D8 /* Deck.m */; };
+		BFF98AFB18E79ABA002022D8 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AFA18E79ABA002022D8 /* PlayingCardDeck.m */; };
+		BFF98AFE18E90961002022D8 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF98AFD18E90961002022D8 /* CardMatchingGame.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BFF98ADA18E52302002022D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFF98AAC18E52302002022D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFF98AB318E52302002022D8;
+			remoteInfo = "Pug Card";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BFF98AB418E52302002022D8 /* Pug Card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pug Card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFF98AB718E52302002022D8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BFF98AB918E52302002022D8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BFF98ABB18E52302002022D8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BFF98ABF18E52302002022D8 /* Pug Card-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pug Card-Info.plist"; sourceTree = "<group>"; };
+		BFF98AC118E52302002022D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BFF98AC318E52302002022D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BFF98AC518E52302002022D8 /* Pug Card-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pug Card-Prefix.pch"; sourceTree = "<group>"; };
+		BFF98AC618E52302002022D8 /* CardGameAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardGameAppDelegate.h; sourceTree = "<group>"; };
+		BFF98AC718E52302002022D8 /* CardGameAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardGameAppDelegate.m; sourceTree = "<group>"; };
+		BFF98ACA18E52302002022D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BFF98ACC18E52302002022D8 /* CardGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardGameViewController.h; sourceTree = "<group>"; };
+		BFF98ACD18E52302002022D8 /* CardGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardGameViewController.m; sourceTree = "<group>"; };
+		BFF98ACF18E52302002022D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BFF98AD518E52302002022D8 /* Pug CardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pug CardTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFF98AD618E52302002022D8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BFF98ADE18E52302002022D8 /* Pug CardTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pug CardTests-Info.plist"; sourceTree = "<group>"; };
+		BFF98AE018E52302002022D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BFF98AE218E52302002022D8 /* Pug_CardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pug_CardTests.m; sourceTree = "<group>"; };
+		BFF98AEE18E54773002022D8 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
+		BFF98AEF18E54773002022D8 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Card.m; path = Model/Card.m; sourceTree = "<group>"; };
+		BFF98AF318E54F75002022D8 /* PlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCard.h; path = Model/PlayingCard.h; sourceTree = "<group>"; };
+		BFF98AF418E54F75002022D8 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = Model/PlayingCard.m; sourceTree = "<group>"; };
+		BFF98AF618E7933C002022D8 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Model/Deck.h; sourceTree = "<group>"; };
+		BFF98AF718E7933C002022D8 /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Deck.m; path = Model/Deck.m; sourceTree = "<group>"; };
+		BFF98AF918E79ABA002022D8 /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardDeck.h; path = Model/PlayingCardDeck.h; sourceTree = "<group>"; };
+		BFF98AFA18E79ABA002022D8 /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
+		BFF98AFC18E90961002022D8 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = Model/CardMatchingGame.h; sourceTree = "<group>"; };
+		BFF98AFD18E90961002022D8 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = Model/CardMatchingGame.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BFF98AB118E52302002022D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFF98ABA18E52302002022D8 /* CoreGraphics.framework in Frameworks */,
+				BFF98ABC18E52302002022D8 /* UIKit.framework in Frameworks */,
+				BFF98AB818E52302002022D8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFF98AD218E52302002022D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFF98AD718E52302002022D8 /* XCTest.framework in Frameworks */,
+				BFF98AD918E52302002022D8 /* UIKit.framework in Frameworks */,
+				BFF98AD818E52302002022D8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BFF98AAB18E52302002022D8 = {
+			isa = PBXGroup;
+			children = (
+				BFF98ABD18E52302002022D8 /* Pug Card */,
+				BFF98ADC18E52302002022D8 /* Pug CardTests */,
+				BFF98AB618E52302002022D8 /* Frameworks */,
+				BFF98AB518E52302002022D8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BFF98AB518E52302002022D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98AB418E52302002022D8 /* Pug Card.app */,
+				BFF98AD518E52302002022D8 /* Pug CardTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BFF98AB618E52302002022D8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98AB718E52302002022D8 /* Foundation.framework */,
+				BFF98AB918E52302002022D8 /* CoreGraphics.framework */,
+				BFF98ABB18E52302002022D8 /* UIKit.framework */,
+				BFF98AD618E52302002022D8 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BFF98ABD18E52302002022D8 /* Pug Card */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98AC918E52302002022D8 /* Main.storyboard */,
+				BFF98AF218E5481B002022D8 /* Model */,
+				BFF98ACC18E52302002022D8 /* CardGameViewController.h */,
+				BFF98ACD18E52302002022D8 /* CardGameViewController.m */,
+				BFF98ACF18E52302002022D8 /* Images.xcassets */,
+				BFF98ABE18E52302002022D8 /* Supporting Files */,
+			);
+			path = "Pug Card";
+			sourceTree = "<group>";
+		};
+		BFF98ABE18E52302002022D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98AC618E52302002022D8 /* CardGameAppDelegate.h */,
+				BFF98AC718E52302002022D8 /* CardGameAppDelegate.m */,
+				BFF98ABF18E52302002022D8 /* Pug Card-Info.plist */,
+				BFF98AC018E52302002022D8 /* InfoPlist.strings */,
+				BFF98AC318E52302002022D8 /* main.m */,
+				BFF98AC518E52302002022D8 /* Pug Card-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BFF98ADC18E52302002022D8 /* Pug CardTests */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98AE218E52302002022D8 /* Pug_CardTests.m */,
+				BFF98ADD18E52302002022D8 /* Supporting Files */,
+			);
+			path = "Pug CardTests";
+			sourceTree = "<group>";
+		};
+		BFF98ADD18E52302002022D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98ADE18E52302002022D8 /* Pug CardTests-Info.plist */,
+				BFF98ADF18E52302002022D8 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BFF98AF218E5481B002022D8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BFF98AEE18E54773002022D8 /* Card.h */,
+				BFF98AEF18E54773002022D8 /* Card.m */,
+				BFF98AF318E54F75002022D8 /* PlayingCard.h */,
+				BFF98AF418E54F75002022D8 /* PlayingCard.m */,
+				BFF98AF618E7933C002022D8 /* Deck.h */,
+				BFF98AF718E7933C002022D8 /* Deck.m */,
+				BFF98AF918E79ABA002022D8 /* PlayingCardDeck.h */,
+				BFF98AFA18E79ABA002022D8 /* PlayingCardDeck.m */,
+				BFF98AFC18E90961002022D8 /* CardMatchingGame.h */,
+				BFF98AFD18E90961002022D8 /* CardMatchingGame.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BFF98AB318E52302002022D8 /* Pug Card */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFF98AE618E52302002022D8 /* Build configuration list for PBXNativeTarget "Pug Card" */;
+			buildPhases = (
+				BFF98AB018E52302002022D8 /* Sources */,
+				BFF98AB118E52302002022D8 /* Frameworks */,
+				BFF98AB218E52302002022D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pug Card";
+			productName = "Pug Card";
+			productReference = BFF98AB418E52302002022D8 /* Pug Card.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BFF98AD418E52302002022D8 /* Pug CardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFF98AE918E52302002022D8 /* Build configuration list for PBXNativeTarget "Pug CardTests" */;
+			buildPhases = (
+				BFF98AD118E52302002022D8 /* Sources */,
+				BFF98AD218E52302002022D8 /* Frameworks */,
+				BFF98AD318E52302002022D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFF98ADB18E52302002022D8 /* PBXTargetDependency */,
+			);
+			name = "Pug CardTests";
+			productName = "Pug CardTests";
+			productReference = BFF98AD518E52302002022D8 /* Pug CardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFF98AAC18E52302002022D8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CardGame;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Nathan Hayflick";
+				TargetAttributes = {
+					BFF98AD418E52302002022D8 = {
+						TestTargetID = BFF98AB318E52302002022D8;
+					};
+				};
+			};
+			buildConfigurationList = BFF98AAF18E52302002022D8 /* Build configuration list for PBXProject "Pug Card" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BFF98AAB18E52302002022D8;
+			productRefGroup = BFF98AB518E52302002022D8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BFF98AB318E52302002022D8 /* Pug Card */,
+				BFF98AD418E52302002022D8 /* Pug CardTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BFF98AB218E52302002022D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFF98AD018E52302002022D8 /* Images.xcassets in Resources */,
+				BFF98AC218E52302002022D8 /* InfoPlist.strings in Resources */,
+				BFF98ACB18E52302002022D8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFF98AD318E52302002022D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFF98AE118E52302002022D8 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BFF98AB018E52302002022D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFF98AC818E52302002022D8 /* CardGameAppDelegate.m in Sources */,
+				BFF98ACE18E52302002022D8 /* CardGameViewController.m in Sources */,
+				BFF98AC418E52302002022D8 /* main.m in Sources */,
+				BFF98AF518E54F75002022D8 /* PlayingCard.m in Sources */,
+				BFF98AFE18E90961002022D8 /* CardMatchingGame.m in Sources */,
+				BFF98AFB18E79ABA002022D8 /* PlayingCardDeck.m in Sources */,
+				BFF98AF818E7933C002022D8 /* Deck.m in Sources */,
+				BFF98AF018E54773002022D8 /* Card.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFF98AD118E52302002022D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFF98AE318E52302002022D8 /* Pug_CardTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BFF98ADB18E52302002022D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFF98AB318E52302002022D8 /* Pug Card */;
+			targetProxy = BFF98ADA18E52302002022D8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BFF98AC018E52302002022D8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BFF98AC118E52302002022D8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BFF98AC918E52302002022D8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BFF98ACA18E52302002022D8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BFF98ADF18E52302002022D8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BFF98AE018E52302002022D8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BFF98AE418E52302002022D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BFF98AE518E52302002022D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BFF98AE718E52302002022D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pug Card/Pug Card-Prefix.pch";
+				INFOPLIST_FILE = "Pug Card/Pug Card-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BFF98AE818E52302002022D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pug Card/Pug Card-Prefix.pch";
+				INFOPLIST_FILE = "Pug Card/Pug Card-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		BFF98AEA18E52302002022D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pug Card.app/Pug Card";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pug Card/Pug Card-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Pug CardTests/Pug CardTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		BFF98AEB18E52302002022D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pug Card.app/Pug Card";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pug Card/Pug Card-Prefix.pch";
+				INFOPLIST_FILE = "Pug CardTests/Pug CardTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BFF98AAF18E52302002022D8 /* Build configuration list for PBXProject "Pug Card" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFF98AE418E52302002022D8 /* Debug */,
+				BFF98AE518E52302002022D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFF98AE618E52302002022D8 /* Build configuration list for PBXNativeTarget "Pug Card" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFF98AE718E52302002022D8 /* Debug */,
+				BFF98AE818E52302002022D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		BFF98AE918E52302002022D8 /* Build configuration list for PBXNativeTarget "Pug CardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFF98AEA18E52302002022D8 /* Debug */,
+				BFF98AEB18E52302002022D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFF98AAC18E52302002022D8 /* Project object */;
+}
