@@ -25,7 +25,6 @@
             }
         }
     }
-    NSLog(@"init");
     
     return self;
     

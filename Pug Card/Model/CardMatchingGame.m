@@ -58,10 +58,8 @@ static const int COST_TO_CHOOSE = 1;
         int matchesFound = 0;
         NSMutableArray *otherCards = [[NSMutableArray alloc] init];
         for (Card *otherCard in self.cards) {
-            if (otherCard.isChosen && !otherCard.isMatched && otherCard != card) {
-                NSLog(@"here");
+            if (otherCard.isChosen && !otherCard.isMatched) {
                 [otherCards addObject:otherCard];
-                NSLog(@"%d", otherCards.count);
                 if (matchesFound++ > self.numberOfMatchCards) break;
             }
         }
@@ -78,24 +76,21 @@ static const int COST_TO_CHOOSE = 1;
             if (matchScore) {
                 self.score += matchScore * MATCH_BONUS;
                 card.matched = YES;
-                NSString *resultString = [NSString stringWithFormat:@"Matched %@ ", card.contents];
+                NSMutableString *resultString = [NSMutableString stringWithFormat:@"Matched %@ ", card.contents];
                 for (Card *chosenCard in otherCards) {
-                    NSLog(@"%@", chosenCard.contents);
-                    resultString = [resultString stringByAppendingString:[NSString stringWithFormat:@"%@ ", chosenCard.contents]];
-                    chosenCard.chosen = YES;
+                    [resultString appendString:[NSString stringWithFormat:@"%@ ", chosenCard.contents]];
                     chosenCard.matched = YES;
                 }
-                resultString = [resultString stringByAppendingString:[NSString stringWithFormat:@"for %d", matchScore * MATCH_BONUS]];
+                [resultString appendString:[NSString stringWithFormat:@"for %d", matchScore * MATCH_BONUS]];
                 self.result = resultString;
             } else {
                 card.matched = NO;
-                NSString *resultString = [NSString stringWithFormat:@"%@ ", card.contents];
+                NSMutableString *resultString = [NSMutableString stringWithFormat:@"%@ ", card.contents];
                 for (Card *chosenCard in otherCards) {
                     chosenCard.chosen = NO;
-                    chosenCard.matched = NO;
-                    resultString = [resultString stringByAppendingString:[NSString stringWithFormat:@"%@ ", chosenCard.contents]];
+                    [resultString appendString:[NSString stringWithFormat:@"%@ ", chosenCard.contents]];
                 }
-                resultString = [resultString stringByAppendingString:[NSString stringWithFormat:@"don't match. %d point penalty!", MISMATCH_PENALTY]];
+                [resultString appendString:[NSString stringWithFormat:@"don't match. %d point penalty!", MISMATCH_PENALTY]];
                 self.result = resultString;
                 self.score -= MISMATCH_PENALTY;
             }
