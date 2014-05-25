@@ -7,26 +7,39 @@
 //
 
 #import "CardGameViewController.h"
-#import "PlayingCardDeck.h"
 #import "PlayingCard.h"
 #import "CardMatchingGame.h"
+#import "CardGameHistoryViewController.h"
 
 
 @interface CardGameViewController ()
-@property (strong, nonatomic) CardMatchingGame *game;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic, readwrite) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeSelector;
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
+@property (nonatomic, readwrite) NSUInteger lastScore;
+
 
 
 @end
 
 @implementation CardGameViewController
 
+@synthesize cardButtons = _cardButtons;
+
 - (Deck *)createDeck
 {
-    return [[PlayingCardDeck alloc] init];
+    return nil;
+}
+
+- (UILabel *)resultsLabel
+{
+    return nil;
+}
+
+- (UILabel *)scoreLabel
+{
+    return nil;
 }
 
 - (CardMatchingGame *)game
@@ -37,44 +50,53 @@
     return _game;
 }
 
-- (IBAction)touchCardButton:(UIButton *)sender
+- (NSMutableAttributedString *)gameHistory
 {
-    self.gameModeSelector.enabled = NO;
-    int chooseButtonIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseCardAtIndex:chooseButtonIndex];
-    self.resultsLabel.text = self.game.result;
-    [self updateUI];
+    if (!_gameHistory) {
+        _gameHistory = [[NSMutableAttributedString alloc] init];
+    }
+    return _gameHistory;
 }
 
-- (void)updateUI
+- (void)setCardButtons:(NSArray *)cardButtons
 {
-    for (UIButton *cardButton in self.cardButtons){
-        int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
-        cardButton.enabled = !card.isMatched;
-        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    _cardButtons = cardButtons;
+}
+
+- (NSArray *)cardButtons
+{
+    return nil;
+}
+
+- (IBAction)touchCardButton:(UIButton *)sender
+{
+    int chooseButtonIndex = [self.cardButtons indexOfObject:sender];
+    [self.game chooseCardAtIndex:chooseButtonIndex];
+    [self updateUI];
+    self.lastScore = self.game.score;
+}
+
+
+- (void)updateUI
+{}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Display Info"]) {
+        if ([segue.destinationViewController isKindOfClass:[CardGameHistoryViewController class]]) {
+            CardGameHistoryViewController *historyViewController = (CardGameHistoryViewController *)segue.destinationViewController;
+            [historyViewController setHistory:self.gameHistory];
+        }
     }
 }
 
-- (NSString *)titleForCard:(Card *)card
+- (void)resetGame
 {
-    return card.isChosen ? card.contents : @"";
-}
-
-- (UIImage *)backgroundImageForCard:(Card *)card
-{
-     UIImage *image = [UIImage imageNamed:card.isChosen ? @"CardFront" : @"CardBack"];
-    return card.isMatched ?  [UIImage imageNamed:@"CardDisabled"] : image;
-}
-
-- (IBAction)resetGame {
     self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]usingDeck:[self createDeck]];
-    self.gameModeSelector.enabled = YES;
-    [self setMatchCount:self.gameModeSelector];
     [self updateUI];
+    self.lastScore = 0;
 }
+
 
 - (IBAction)setMatchCount:(id)sender {
    [self.game setNumberOfMatchCards:[sender selectedSegmentIndex] + 1];
