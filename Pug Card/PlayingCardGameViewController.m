@@ -9,10 +9,11 @@
 #import "PlayingCardGameViewController.h"
 #import "CardGameHistoryViewController.h"
 #import "PlayingCardDeck.h"
+#import "PlayingCardView.h"
 
 
 @interface PlayingCardGameViewController ()
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *playingCardButtons;
+//@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *playingCardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
@@ -22,18 +23,16 @@
 
 @implementation PlayingCardGameViewController
 
+- (NSUInteger) startingCardCount
+{
+    return 12;
+}
+
+
 - (PlayingCardDeck *)createDeck{
     return [[PlayingCardDeck alloc] init];
 }
 
-- (NSArray *)cardButtons
-{
-    NSArray *cardButtonsCollection = [super cardButtons];
-    if (!cardButtonsCollection) {
-        cardButtonsCollection = self.playingCardButtons;
-    }
-    return cardButtonsCollection;
-}
 
 - (IBAction)touchCardButton:(UIButton *)sender {
     [super touchCardButton:sender];
@@ -41,15 +40,6 @@
 
 - (void)updateUI
 {
-//    Update Buttons
-    for (UIButton *cardButton in self.cardButtons){
-        int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
-        cardButton.enabled = !card.isMatched;
-        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    }
 //    Update Label
     if (self.game.lastSelectedCards.count > 1) {
 //        For correct matches
@@ -74,13 +64,35 @@
         }
     }
     self.resultsLabel.attributedText = self.resultsString;
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     [self.gameHistory appendAttributedString:self.resultsString];
     [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+    [self renderCards];
+}
+
+- (void) renderCards;
+{
+    NSLog(@"%@", self.game.cards);
+    NSLog(@"here");
+    //    Update Cards
+    NSUInteger i = 0;
+    for (PlayingCard *card in self.game.cards){
+//        Card *card = [self.game cardAtIndex:i];
+        PlayingCardView *playingCardView = [[PlayingCardView alloc] initWithFrame:[self cardPosition:i]];
+        playingCardView.rank = card.rank;
+        playingCardView.suit = card.suit;
+        [self.view addSubview:playingCardView];
+        i++;
+        
+//        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+//        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
+//        cardButton.enabled = !card.isMatched;
+    }
 }
 
 - (IBAction)resetGame:(id)sender
 {
-    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]usingDeck:[self createDeck]];
+    self.game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount usingDeck:[self createDeck]];
     [self updateUI];
 }
 
@@ -109,6 +121,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self renderCards];
+
 }
 
 - (void)didReceiveMemoryWarning

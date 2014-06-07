@@ -10,18 +10,6 @@
 
 @implementation SetCard
 
-+ (NSArray *)validShapes {
-    return @[@"▲", @"●", @"◼︎"];
-}
-
-+ (NSArray *) validAlphas {
-    return @[@0.3, @0.6, @1];
-}
-
-+ (NSArray *) validUIForegroundColors {
-     return @[[UIColor greenColor], [UIColor redColor], [UIColor blueColor]];
-}
-
 - (NSString *)contents {
     return nil;
 }

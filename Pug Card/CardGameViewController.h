@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Deck.h"
 #import "CardMatchingGame.h"
+#import "Grid.h"
 
 
 @interface CardGameViewController : UIViewController
@@ -17,13 +18,17 @@
 - (Deck *)createDeck;
 - (IBAction)touchCardButton:(UIButton *)sender;
 
-@property (nonatomic, readonly) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (nonatomic, readonly) NSMutableArray *cards;
 @property (nonatomic) CardMatchingGame *game;
 @property (nonatomic, readonly) NSUInteger lastScore;
 @property (strong, nonatomic) NSMutableAttributedString *resultsString;
 @property (strong, nonatomic) NSMutableAttributedString *gameHistory;
+@property (nonatomic, readwrite) NSUInteger startingCardCount;
+
+
 
 - (void)resetGame;
+- (CGRect)cardPosition:(NSUInteger)index;
 
 
 @end

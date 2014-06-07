@@ -12,7 +12,7 @@
 
 
 @interface SetCardGameViewController ()
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *setCardButtons;
+@property (strong, nonatomic) NSMutableArray *setCards; //of setCards
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
@@ -21,17 +21,23 @@
 @implementation SetCardGameViewController
 
 - (SetCardDeck *)createDeck {
-    return [[SetCardDeck alloc] init];
+    return [[SetCardDeck alloc] initWithShapes:@[@"▲", @"●", @"◼︎"] validForegroundColors:@[[UIColor greenColor], [UIColor redColor], [UIColor blueColor]] validAlphas:@[@0.3, @0.6, @1]];
 }
 
-- (NSArray *)cardButtons
+- (NSMutableArray *)cards
 {
-    NSArray *cardButtonsCollection = [super cardButtons];
-    if (!cardButtonsCollection) {
-        cardButtonsCollection = [self setCardButtons];
+    NSMutableArray *cardsCollection = [super cards];
+    if (!cardsCollection) {
+        cardsCollection = [self setCards];
     }
-    return cardButtonsCollection;
+    return cardsCollection;
 }
+
+- (NSUInteger) startingCardCount
+{
+    return 12;
+}
+
 
 - (IBAction)touchCardButton:(UIButton *)sender {
     [super touchCardButton:sender];
@@ -39,8 +45,8 @@
 
 - (void)updateUI
 {
-    for (UIButton *cardButton in self.cardButtons){
-        int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+    for (UIButton *cardButton in self.cards){
+        int cardButtonIndex = [self.cards indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
         [cardButton setBackgroundColor:[self cardBackgroundColor:card]];
         cardButton.enabled = !card.isMatched;
@@ -112,12 +118,14 @@
 
 - (void)renderCards
 {
-    for (UIButton *button in self.cardButtons) {
-        int cardButtonIndex = [self.cardButtons indexOfObject:button];
+    NSUInteger i = 0;
+    for (SetCard *setCard in self.cards) {
+        int cardButtonIndex = i++;
+//        Should ensure card is subclass setCard here
         SetCard *setCard = (SetCard *) [self.game cardAtIndex:cardButtonIndex];
         NSMutableAttributedString *buttonTitle = [[NSMutableAttributedString alloc] initWithString:setCard.shape];
         [buttonTitle addAttributes:@{NSForegroundColorAttributeName : [setCard.foregroundColor colorWithAlphaComponent:[setCard.alpha floatValue]], NSStrokeColorAttributeName : [UIColor blackColor],NSStrokeWidthAttributeName : @-5} range:NSMakeRange(0, buttonTitle.length)];
-        [button setAttributedTitle:buttonTitle forState:UIControlStateNormal];
+//        [button setAttributedTitle:buttonTitle forState:UIControlStateNormal];
     }
 }
 

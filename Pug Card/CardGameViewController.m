@@ -10,22 +10,22 @@
 #import "PlayingCard.h"
 #import "CardMatchingGame.h"
 #import "CardGameHistoryViewController.h"
+#import "Grid.h"
 
 
 @interface CardGameViewController ()
-@property (strong, nonatomic, readwrite) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic, readwrite) NSMutableArray *cards;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeSelector;
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 @property (nonatomic, readwrite) NSUInteger lastScore;
 
 
-
 @end
 
 @implementation CardGameViewController
 
-@synthesize cardButtons = _cardButtons;
+@synthesize cards = _cards;
 
 - (Deck *)createDeck
 {
@@ -42,10 +42,15 @@
     return nil;
 }
 
+- (NSUInteger) startingCardCount
+{
+    return 12;
+}
+
 - (CardMatchingGame *)game
 {
     if (!_game) {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
+        _game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount usingDeck:[self createDeck]];
     }
     return _game;
 }
@@ -58,19 +63,19 @@
     return _gameHistory;
 }
 
-- (void)setCardButtons:(NSArray *)cardButtons
+- (void)setCards:(NSMutableArray *)cards
 {
-    _cardButtons = cardButtons;
+    _cards = cards;
 }
 
-- (NSArray *)cardButtons
+- (NSMutableArray *)cards
 {
     return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    int chooseButtonIndex = [self.cardButtons indexOfObject:sender];
+    int chooseButtonIndex = [self.cards indexOfObject:sender];
     [self.game chooseCardAtIndex:chooseButtonIndex];
     [self updateUI];
     self.lastScore = self.game.score;
@@ -90,9 +95,22 @@
     }
 }
 
+#define CARD_ASPECT_RATIO 2.25/3.5;
+
+- (CGRect)cardPosition:(NSUInteger)index
+{
+    Grid *grid = [[Grid alloc] init];
+    grid.size = self.view.bounds.size;
+    grid.cellAspectRatio = CARD_ASPECT_RATIO;
+    grid.minimumNumberOfCells = 12;
+    NSUInteger row = index / grid.columnCount;
+    NSUInteger column = index - (row * grid.columnCount);
+    return [grid frameOfCellAtRow:row inColumn:column];
+}
+
 - (void)resetGame
 {
-    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]usingDeck:[self createDeck]];
+    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cards count]usingDeck:[self createDeck]];
     [self updateUI];
     self.lastScore = 0;
 }
@@ -101,5 +119,6 @@
 - (IBAction)setMatchCount:(id)sender {
    [self.game setNumberOfMatchCards:[sender selectedSegmentIndex] + 1];
 }
+
 
 @end

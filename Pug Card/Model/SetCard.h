@@ -14,8 +14,4 @@
 @property (strong, nonatomic) UIColor *foregroundColor;
 @property (strong, nonatomic) NSNumber *alpha;
 
-+ (NSArray *)validShapes;
-+ (NSArray *)validAlphas;
-+ (NSArray *)validUIForegroundColors;
-
 @end
