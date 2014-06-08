@@ -13,5 +13,8 @@
 @property (nonatomic) NSUInteger rank;
 @property (strong, nonatomic) NSString *suit;
 @property (nonatomic) BOOL faceUp;
+@property (nonatomic) NSUInteger index;
+
+- (void)flip;
 
 @end

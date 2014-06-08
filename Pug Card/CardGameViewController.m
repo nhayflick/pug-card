@@ -73,10 +73,10 @@
     return nil;
 }
 
-- (IBAction)touchCardButton:(UIButton *)sender
+- (void)touchCardButton:(NSUInteger)index
 {
-    int chooseButtonIndex = [self.cards indexOfObject:sender];
-    [self.game chooseCardAtIndex:chooseButtonIndex];
+    NSLog(@"%d", index);
+    [self.game chooseCardAtIndex:index];
     [self updateUI];
     self.lastScore = self.game.score;
 }

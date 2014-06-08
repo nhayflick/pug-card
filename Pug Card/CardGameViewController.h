@@ -16,7 +16,7 @@
 
 // Abstract Class - Subclass Must Implement
 - (Deck *)createDeck;
-- (IBAction)touchCardButton:(UIButton *)sender;
+- (void)touchCardButton:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSMutableArray *cards;
 @property (nonatomic) CardMatchingGame *game;

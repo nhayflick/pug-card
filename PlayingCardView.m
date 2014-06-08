@@ -33,10 +33,17 @@
     return @[@"?",@"A",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"][self.rank];
 }
 
+#pragma mark - Gestures
+
+- (void)flip
+{
+    self.faceUp = !self.faceUp;
+}
+
 #pragma mark - Drawing
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
-#define CORNER_RADIUS 12.0
+#define CORNER_RADIUS 6.0
 
 - (CGFloat)cornerScaleFactor { return self.bounds.size.height / CORNER_FONT_STANDARD_HEIGHT; }
 - (CGFloat)cornerRadius { return CORNER_RADIUS / [self cornerScaleFactor]; }
@@ -56,7 +63,12 @@
     
     [[UIColor blackColor] setStroke];
     [roundedRect stroke];
-    [self drawCorners];
+    if (self.faceUp) {
+        NSLog(@"hereeee");
+        [self drawCorners];
+    } else {
+        
+    }
 }
 
 - (void)drawCorners
@@ -74,6 +86,10 @@
     textBounds.size = cornerText.size;
     [cornerText drawInRect:textBounds];
     
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context, self.bounds.size.width, self.bounds.size.height);
+    CGContextRotateCTM(context, M_PI);
+    [cornerText drawInRect:textBounds];
 }
 
 #pragma mark - Initialization

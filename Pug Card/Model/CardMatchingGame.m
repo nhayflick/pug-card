@@ -63,44 +63,47 @@ static const int COST_TO_CHOOSE = 1;
     
     [self.lastSelectedCards removeAllObjects];
     if (card){
-        [self.lastSelectedCards addObject:card];
-    }
-    
-    if (!card.isMatched) {
-        int matchesFound = 0;
-        NSMutableArray *otherCards = [[NSMutableArray alloc] init];
-        for (Card *otherCard in self.cards) {
-            if (otherCard.isChosen && !otherCard.isMatched) {
-                [otherCards addObject:otherCard];
-                [self.lastSelectedCards addObject:otherCard];
-                if (matchesFound++ > self.numberOfMatchCards) break;
-            }
-        }
-        if (otherCards.count == 0){
-            if (card.chosen){
-                card.chosen = NO;
-            } else {
-                card.chosen = YES;
-            }
-        } else if (matchesFound >= self.numberOfMatchCards) {
-            int matchScore = [card match:otherCards];
-            if (matchScore) {
-                self.score += matchScore * MATCH_BONUS;
-                card.matched = YES;
-                for (Card *chosenCard in otherCards) {
-                    chosenCard.matched = YES;
-                }
-            } else {
-                card.matched = NO;
-                for (Card *chosenCard in otherCards) {
-                    chosenCard.chosen = NO;
-                }
-                self.score -= MISMATCH_PENALTY;
-            }
-         
-            card.chosen = YES;
+        if (card.isChosen) {
+            card.chosen = NO;
         } else {
-            card.chosen = YES;
+            [self.lastSelectedCards addObject:card];
+            if (!card.isMatched) {
+                int matchesFound = 0;
+                NSMutableArray *otherCards = [[NSMutableArray alloc] init];
+                for (Card *otherCard in self.cards) {
+                    if (otherCard.isChosen && !otherCard.isMatched) {
+                        [otherCards addObject:otherCard];
+                        [self.lastSelectedCards addObject:otherCard];
+                        if (matchesFound++ > self.numberOfMatchCards) break;
+                    }
+                }
+                if (otherCards.count == 0){
+                    if (card.chosen){
+                        card.chosen = NO;
+                    } else {
+                        card.chosen = YES;
+                    }
+                } else if (matchesFound >= self.numberOfMatchCards) {
+                    int matchScore = [card match:otherCards];
+                    if (matchScore) {
+                        self.score += matchScore * MATCH_BONUS;
+                        card.matched = YES;
+                        for (Card *chosenCard in otherCards) {
+                            chosenCard.matched = YES;
+                        }
+                    } else {
+                        card.matched = NO;
+                        for (Card *chosenCard in otherCards) {
+                            chosenCard.chosen = NO;
+                        }
+                        self.score -= MISMATCH_PENALTY;
+                    }
+                 
+                    card.chosen = YES;
+                } else {
+                    card.chosen = YES;
+                }
+            }
         }
         self.score -= COST_TO_CHOOSE;
     }

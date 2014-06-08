@@ -34,9 +34,24 @@
 }
 
 
-- (IBAction)touchCardButton:(UIButton *)sender {
-    [super touchCardButton:sender];
+- (void)touchCardButton:(NSUInteger)index {
+    [super touchCardButton:index];
 }
+
+#pragma mark - Gestures
+
+- (void)swipeCard:(UIGestureRecognizer *)target
+{
+    NSLog(@"outer swipe");
+    if ([target.view isKindOfClass:[PlayingCardView class]]) {
+        NSLog(@"innder swipe");
+        PlayingCardView *playingCardView = (PlayingCardView *)target.view;
+        [playingCardView flip];
+        [self touchCardButton:playingCardView.index];
+    }
+}
+
+#pragma mark - Game Logic
 
 - (void)updateUI
 {
@@ -67,7 +82,6 @@
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     [self.gameHistory appendAttributedString:self.resultsString];
     [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-    [self renderCards];
 }
 
 - (void) renderCards;
@@ -81,6 +95,8 @@
         PlayingCardView *playingCardView = [[PlayingCardView alloc] initWithFrame:[self cardPosition:i]];
         playingCardView.rank = card.rank;
         playingCardView.suit = card.suit;
+        playingCardView.index = [self.game.cards indexOfObject:card];
+        [playingCardView addGestureRecognizer:[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)]];
         [self.view addSubview:playingCardView];
         i++;
         
@@ -89,6 +105,8 @@
 //        cardButton.enabled = !card.isMatched;
     }
 }
+         
+
 
 - (IBAction)resetGame:(id)sender
 {
