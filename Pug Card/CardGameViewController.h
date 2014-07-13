@@ -20,6 +20,7 @@
 
 @property (nonatomic, readonly) NSMutableArray *cards;
 @property (nonatomic) CardMatchingGame *game;
+@property (nonatomic) IBOutlet UIView *containerView;
 @property (nonatomic, readonly) NSUInteger lastScore;
 @property (strong, nonatomic) NSMutableAttributedString *resultsString;
 @property (strong, nonatomic) NSMutableAttributedString *gameHistory;
@@ -28,6 +29,7 @@
 
 
 - (void)resetGame;
+- (void)updateUI;
 - (CGRect)cardPosition:(NSUInteger)index;
 
 

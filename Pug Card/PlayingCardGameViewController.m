@@ -16,6 +16,9 @@
 //@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *playingCardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (strong, nonatomic) NSMutableArray *playingCardViews; //of playingCardViews
+
 
 @end
 
@@ -33,21 +36,24 @@
     return [[PlayingCardDeck alloc] init];
 }
 
-
-- (void)touchCardButton:(NSUInteger)index {
-    [super touchCardButton:index];
+- (NSMutableArray *)playingCardViews
+{
+    if (!_playingCardViews) _playingCardViews = [[NSMutableArray alloc] init];
+    return _playingCardViews;
 }
 
 #pragma mark - Gestures
 
 - (void)swipeCard:(UIGestureRecognizer *)target
 {
-    NSLog(@"outer swipe");
     if ([target.view isKindOfClass:[PlayingCardView class]]) {
-        NSLog(@"innder swipe");
-        PlayingCardView *playingCardView = (PlayingCardView *)target.view;
-        [playingCardView flip];
-        [self touchCardButton:playingCardView.index];
+        __block PlayingCardView *playingCardView = (PlayingCardView *)target.view;
+        [UIView transitionWithView:playingCardView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            [playingCardView flip];
+        } completion:^(BOOL finished) {
+            [self touchCardButton:playingCardView.index];
+            [self updateUI];
+        }];
     }
 }
 
@@ -55,6 +61,21 @@
 
 - (void)updateUI
 {
+    for (PlayingCardView *playingCardView in self.playingCardViews){
+        __block PlayingCard *playingCard = [self.game cardAtIndex:playingCardView.index];
+        playingCardView.rank = playingCard.rank;
+        playingCardView.faceUp = playingCard.isChosen;
+        playingCardView.isMatched = playingCard.isMatched;
+        playingCardView.suit = playingCard.suit;
+        __block CGRect frame = [self cardPosition:playingCardView.index];
+        if (!CGRectEqualToRect(frame, playingCardView.frame)) {
+            [UIView animateWithDuration:1 animations:^{
+                playingCardView.frame = frame;
+            } completion:NULL];
+        }
+    }
+
+    
 //    Update Label
     if (self.game.lastSelectedCards.count > 1) {
 //        For correct matches
@@ -84,36 +105,36 @@
     [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
 }
 
-- (void) renderCards;
+- (void) drawCards
 {
     NSLog(@"%@", self.game.cards);
     NSLog(@"here");
     //    Update Cards
     NSUInteger i = 0;
     for (PlayingCard *card in self.game.cards){
-//        Card *card = [self.game cardAtIndex:i];
-        PlayingCardView *playingCardView = [[PlayingCardView alloc] initWithFrame:[self cardPosition:i]];
+        PlayingCardView *playingCardView = [[PlayingCardView alloc] initWithFrame:[self cardPosition:[self.game.cards indexOfObject:card]]];
         playingCardView.rank = card.rank;
+        playingCardView.faceUp = card.chosen;
         playingCardView.suit = card.suit;
         playingCardView.index = [self.game.cards indexOfObject:card];
         [playingCardView addGestureRecognizer:[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)]];
-        [self.view addSubview:playingCardView];
-        i++;
+        [self.containerView addSubview:playingCardView];
         
-//        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-//        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
-//        cardButton.enabled = !card.isMatched;
+        [self.playingCardViews addObject:playingCardView];
+
+        playingCardView.swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
+        [playingCardView addGestureRecognizer:playingCardView.swipeRecognizer];
+        
+        i++;
     }
-}
-         
-
-
-- (IBAction)resetGame:(id)sender
-{
-    self.game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount usingDeck:[self createDeck]];
     [self updateUI];
+
 }
 
+- (IBAction)resetGame:(id)sender {
+    self.game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount usingDeck:[self createDeck]];
+    [self drawCards];
+}
 
 - (NSString *)titleForCard:(Card *)card
 {
@@ -138,9 +159,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    [self renderCards];
+//    [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
 
+    NSLog(@"did load");
+    // Do any additional setup after loading the view.
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    NSLog(@"did layout");
+    [self drawCards];
 }
 
 - (void)didReceiveMemoryWarning

@@ -73,17 +73,15 @@
     return nil;
 }
 
+- (void)updateUI
+{}
+
 - (void)touchCardButton:(NSUInteger)index
 {
     NSLog(@"%d", index);
     [self.game chooseCardAtIndex:index];
-    [self updateUI];
     self.lastScore = self.game.score;
 }
-
-
-- (void)updateUI
-{}
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -100,9 +98,10 @@
 - (CGRect)cardPosition:(NSUInteger)index
 {
     Grid *grid = [[Grid alloc] init];
-    grid.size = self.view.bounds.size;
+    grid.size = self.containerView.bounds.size;
     grid.cellAspectRatio = CARD_ASPECT_RATIO;
-    grid.minimumNumberOfCells = 12;
+    grid.minimumNumberOfCells = [self.game.cards count];
+    NSLog(@"me: %i", grid.columnCount);
     NSUInteger row = index / grid.columnCount;
     NSUInteger column = index - (row * grid.columnCount);
     return [grid frameOfCellAtRow:row inColumn:column];
@@ -110,14 +109,29 @@
 
 - (void)resetGame
 {
-    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cards count]usingDeck:[self createDeck]];
+    NSLog(@"cards: %d", [self.cards count]);
+    self.game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount usingDeck:[self createDeck]];
+    return;
     [self updateUI];
     self.lastScore = 0;
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+//    self.grid.size = self.containerView.bounds.size;
+    [super didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation];
+    NSLog(@"rotate!!");
+    [self updateUI];
+}
 
 - (IBAction)setMatchCount:(id)sender {
    [self.game setNumberOfMatchCards:[sender selectedSegmentIndex] + 1];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return YES;
 }
 
 

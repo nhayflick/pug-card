@@ -1,18 +1,20 @@
 //
-//  SetCard.h
+//  SetCardView.h
 //  Pug Card
 //
-//  Created by Nathan Hayflick on 4/15/14.
+//  Created by Nathan Hayflick on 6/7/14.
 //  Copyright (c) 2014 Nathan Hayflick. All rights reserved.
 //
 
-#import "Card.h"
+#import "CardView.h"
 
-@interface SetCard : Card
+@interface SetCardView : CardView
 
 @property (nonatomic) NSUInteger shape;
 @property (nonatomic) NSUInteger foregroundColor;
 @property (nonatomic) NSUInteger alpha;
 @property (nonatomic) NSUInteger quantity;
+
+- (void)pick;
 
 @end

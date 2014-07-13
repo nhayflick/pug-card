@@ -9,5 +9,4 @@
 #import "Deck.h"
 
 @interface SetCardDeck : Deck
-- (instancetype) initWithShapes:(NSArray *)validShapes validForegroundColors:(NSArray *)validForegroundColors validAlphas:(NSArray *)validAlphas;
 @end

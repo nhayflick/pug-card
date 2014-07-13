@@ -9,19 +9,22 @@
 #import "SetCardGameViewController.h"
 #import "SetCardDeck.h"
 #import "SetCard.h"
+#import "SetCardView.h"
 
 
 @interface SetCardGameViewController ()
-@property (strong, nonatomic) NSMutableArray *setCards; //of setCards
+@property (strong, nonatomic) NSMutableArray *setCards; //of SetCards
+@property (strong, nonatomic) NSMutableArray *setCardViews; //of SetCardViews
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @end
 
 @implementation SetCardGameViewController
 
 - (SetCardDeck *)createDeck {
-    return [[SetCardDeck alloc] initWithShapes:@[@"▲", @"●", @"◼︎"] validForegroundColors:@[[UIColor greenColor], [UIColor redColor], [UIColor blueColor]] validAlphas:@[@0.3, @0.6, @1]];
+    return [[SetCardDeck alloc] init];
 }
 
 - (NSMutableArray *)cards
@@ -33,68 +36,157 @@
     return cardsCollection;
 }
 
+- (NSMutableArray *)setCardViews
+{
+    if (!_setCardViews) _setCardViews = [[NSMutableArray alloc] init];
+    return _setCardViews;
+}
+
 - (NSUInteger) startingCardCount
 {
     return 12;
 }
 
 
-- (IBAction)touchCardButton:(UIButton *)sender {
-    [super touchCardButton:sender];
-}
-
-- (void)updateUI
-{
-    for (UIButton *cardButton in self.cards){
-        int cardButtonIndex = [self.cards indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setBackgroundColor:[self cardBackgroundColor:card]];
-        cardButton.enabled = !card.isMatched;
-        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    }
-//    Update Label
-    if (self.game.lastSelectedCards.count > self.game.numberOfMatchCards) {
-        //        For correct matches
-        if (self.game.score > self.lastScore) {
-            self.resultsString = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
-            for (SetCard *card in self.game.lastSelectedCards) {
-                [self.resultsString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", card.shape] attributes:@{NSForegroundColorAttributeName : [card.foregroundColor colorWithAlphaComponent:[card.alpha floatValue]], NSStrokeColorAttributeName : [UIColor blackColor],NSStrokeWidthAttributeName : @-5}]];
-            }
-            [self.resultsString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"for %d points.", self.game.score - self.lastScore]]];
-            //        For incorrect matches
-        } else {
-            self.resultsString = [[NSMutableAttributedString alloc] init];
-            for (SetCard *card in self.game.lastSelectedCards) {
-                [self.resultsString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", card.shape] attributes:@{NSForegroundColorAttributeName : [card.foregroundColor colorWithAlphaComponent:[card.alpha floatValue]], NSStrokeColorAttributeName : [UIColor blackColor],NSStrokeWidthAttributeName : @-5}]];
-            }
-            [self.resultsString appendAttributedString:[[NSAttributedString alloc] initWithString:@"don't match."]];
-        }
-    } else {
-        self.resultsString = [[NSMutableAttributedString alloc] initWithString:@"Picked "];
-        for (SetCard *card in self.game.lastSelectedCards) {
-            [self.resultsString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", card.shape] attributes:@{NSForegroundColorAttributeName : [card.foregroundColor colorWithAlphaComponent:[card.alpha floatValue]], NSStrokeColorAttributeName : [UIColor blackColor],NSStrokeWidthAttributeName : @-5}]];
-        }
-    }
-    self.resultsLabel.attributedText = self.resultsString;
-    [self.gameHistory appendAttributedString:self.resultsString];
-    [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+- (void)touchCardButton:(NSUInteger)index {
+    [super touchCardButton:index];
 }
 
 - (IBAction)resetGame:(id)sender {
+    // Clear Cards
+    for (SetCardView *setCardView in self.setCardViews) {
+        [self removeCard:setCardView];
+    }
+    [self.setCardViews removeAllObjects];
     [super resetGame];
-    [self renderCards];
+    [self.game setNumberOfMatchCards:2];
+    [self updateUI];
+}
+
+- (void) swipeCard:(UIGestureRecognizer *)target {
+    if ([target.view isKindOfClass:[SetCardView class]]) {
+        NSLog(@"heyy");
+        SetCardView *setCardView = (SetCardView *)target.view;
+        [self touchCardButton:setCardView.index];
+        SetCard *setCard = (SetCard *)[self.game.cards objectAtIndex:setCardView.index];
+        setCardView.isMatched = [setCard isMatched];
+        setCardView.isChosen = [setCard isChosen];
+        if (setCardView.isMatched) {
+            NSLog(@"matched");
+        } else {
+            [setCardView pick];
+        }
+        [self updateUI];
+    }
+}
+
+- (IBAction)deal:(id)sender {
+    [self.game drawCards];
+    [self updateUI];
 }
 
 
-- (UIColor *)cardBackgroundColor:(Card *)card{
-    if (card.isChosen) {
-        return [UIColor grayColor];
+- (void)updateUI
+{
+//    // Clear Cards
+//    [self.setCardViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    //    Render Cards
+    NSUInteger i = 0;
+    
+    
+    for (SetCard *card in self.game.cards){
+        int index = [self.game.cards indexOfObject:card];
+        __block SetCardView *setCardView;
+        if (index < [self.setCardViews count]) {
+            NSLog(@"if");
+            setCardView = [self.setCardViews objectAtIndex:index];
+            
+            setCardView.quantity = card.quantity;
+            setCardView.shape = card.shape;
+            setCardView.alpha = card.alpha;
+            setCardView.foregroundColor = card.foregroundColor;
+            setCardView.index = index;
+            if (card.isMatched) {
+                [self removeCard:setCardView];
+            }
+            setCardView.isMatched = card.isMatched;
+            [setCardView setIsChosen:card.isChosen];
+        } else {
+            NSLog(@"else");
+            setCardView = [[SetCardView alloc] init];
+            
+            setCardView.quantity = card.quantity;
+            setCardView.shape = card.shape;
+            setCardView.alpha = card.alpha;
+            setCardView.foregroundColor = card.foregroundColor;
+            setCardView.index = index;
+            if (card.isMatched) {
+                [self removeCard:setCardView];
+            }
+            setCardView.isMatched = card.isMatched;
+            [setCardView setIsChosen:card.isChosen];
+            
+            [self.containerView addSubview:setCardView];
+            [self.setCardViews addObject:setCardView];
+            
+            setCardView.swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
+            [setCardView addGestureRecognizer:setCardView.swipeRecognizer];
+        }
+        
+        __block CGRect frame = [self cardPosition:setCardView.index];
+        
+        if (!CGRectEqualToRect(frame, setCardView.frame)) {
+            [UIView animateWithDuration:1 animations:^{
+                setCardView.frame = frame;
+            } completion:NULL];
+        }
+
+        i++;
     }
-    if (card.isMatched) {
-        return [UIColor cyanColor];
-    }
-    return [UIColor whiteColor];
 }
+
+-(void)drawCards
+{
+
+    //    Render Cards
+    NSUInteger i = 0;
+    
+    
+    for (SetCard *card in self.game.cards){
+        if (card.isMatched) continue;
+        int index = [self.game.cards indexOfObject:card];
+        
+        SetCardView *setCardView = [[SetCardView alloc] initWithFrame:[self cardPosition:index]];
+        
+        setCardView.quantity = card.quantity;
+        setCardView.shape = card.shape;
+        setCardView.alpha = card.alpha;
+        setCardView.foregroundColor = card.foregroundColor;
+        setCardView.index = index;
+        setCardView.isMatched = card.isMatched;
+        [setCardView setIsChosen:card.isChosen];
+        
+        [self.containerView addSubview:setCardView];
+        [self.setCardViews addObject:setCardView];
+        
+        setCardView.swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCard:)];
+        [setCardView addGestureRecognizer:setCardView.swipeRecognizer];
+        
+        i++;
+    }
+
+}
+
+- (void)removeCard:(SetCardView *)setCardView
+{
+    [UIView animateWithDuration:1.0 animations:^{
+        setCardView.frame = CGRectMake(0.0, self.containerView.bounds.size.height, 80.0, 100.0);
+    } completion:^(BOOL finished) {
+        [setCardView removeFromSuperview];
+    }];
+}
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -110,23 +202,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    
     
     [self.game setNumberOfMatchCards:2];
-    
-    [self renderCards];
 }
 
-- (void)renderCards
+- (void)viewDidLayoutSubviews
 {
-    NSUInteger i = 0;
-    for (SetCard *setCard in self.cards) {
-        int cardButtonIndex = i++;
-//        Should ensure card is subclass setCard here
-        SetCard *setCard = (SetCard *) [self.game cardAtIndex:cardButtonIndex];
-        NSMutableAttributedString *buttonTitle = [[NSMutableAttributedString alloc] initWithString:setCard.shape];
-        [buttonTitle addAttributes:@{NSForegroundColorAttributeName : [setCard.foregroundColor colorWithAlphaComponent:[setCard.alpha floatValue]], NSStrokeColorAttributeName : [UIColor blackColor],NSStrokeWidthAttributeName : @-5} range:NSMakeRange(0, buttonTitle.length)];
-//        [button setAttributedTitle:buttonTitle forState:UIControlStateNormal];
-    }
+    [super viewDidLayoutSubviews];
+    NSLog(@"did layout");
+    [self drawCards];
 }
 
 - (void)didReceiveMemoryWarning

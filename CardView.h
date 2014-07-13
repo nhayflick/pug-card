@@ -10,5 +10,14 @@
 
 @interface CardView : UIView
 @property (nonatomic) NSUInteger index;
+@property (nonatomic) BOOL isChosen;
+@property (nonatomic) BOOL isMatched;
+@property (nonatomic) UIGestureRecognizer *swipeRecognizer;
+
+
+- (CGFloat)cornerScaleFactor;
+- (CGFloat)cornerRadius;
+- (CGFloat)cornerOffset;
 
 @end
+

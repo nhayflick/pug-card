@@ -11,18 +11,21 @@
 
 @implementation SetCardDeck
 
-- (instancetype) initWithShapes:(NSArray *)validShapes validForegroundColors:(NSArray *)validForegroundColors validAlphas:(NSArray *)validAlphas {
+- (instancetype) init{
     self = [super init];
     
     if (self) {
-        for (NSString *validShape in validShapes) {
-            for (UIColor *validUIForegroundColor in validForegroundColors) {
-                for (NSNumber *validAlpha in validAlphas) {
-                    SetCard *setCard = [[SetCard alloc] init];
-                    setCard.shape = validShape;
-                    setCard.foregroundColor = validUIForegroundColor;
-                    setCard.alpha = validAlpha;
-                    [self addCard:setCard];
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                for (int k = 1; k <= 3; k++) {
+                    for (int l = 1; l <= 3; l++) {
+                        SetCard *setCard = [[SetCard alloc] init];
+                        setCard.shape = (NSUInteger)i;
+                        setCard.foregroundColor = (NSUInteger)j;
+                        setCard.alpha = (NSUInteger)k;
+                        setCard.quantity = l;
+                        [self addCard:setCard];
+                    }
                 }
             }
         }
@@ -30,5 +33,6 @@
     
     return self;
 }
+
 
 @end

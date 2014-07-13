@@ -15,6 +15,7 @@
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck;
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+- (void)drawCards;
 
 @property (nonatomic, readonly) NSUInteger score;
 @property (nonatomic, readonly) NSMutableArray *cards; // of Cards
